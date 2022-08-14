@@ -1,6 +1,6 @@
 Agreguen una línea y hagan commit.
 
--
+-Línea de prueba, también están unos códigos básicos para usar git - Aura
 -
 -
 -
