@@ -1,0 +1,18 @@
+Agreguen una línea y hagan commit.
+
+-
+-
+-
+-
+
+-------------------------------------------------------------------------------
+
+COMANDOS DE GIT
+- git clone <https://link-con-nombre-del-repositorio> -> Clonar un repositorio
+- git status -> Muestra todos los archivos nuevos o modificados que se deben confirmar
+- git add . -> Incluye los cambios de todos los archivos en tu siguiente commit
+- git add NombreDelArchivo -> Incluye los cambios de  un único archivo en tu siguiente commit
+- git commit -m "mensaje" -> Guarda o confirma tus cambios de forma local local con una pequeña descripción; establece un punto de control.
+- git push -> Enviar tus commits al repositorio remoto (Github)
+- git pull -> Recibir o bajar actualizaciones del repositorio remoto
+
