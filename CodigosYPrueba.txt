@@ -15,4 +15,4 @@ COMANDOS DE GIT
 - git commit -m "mensaje" -> Guarda o confirma tus cambios de forma local local con una pequeña descripción; establece un punto de control.
 - git push -> Enviar tus commits al repositorio remoto (Github)
 - git pull -> Recibir o bajar actualizaciones del repositorio remoto
-
+- git branch -> Mirar las ramas que hay y en la que estas
