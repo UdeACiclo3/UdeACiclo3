@@ -1,1 +1,18 @@
-git commit -m "Esta es  una prueba versión"
+git commit -m "Esta es  una versión prueba"
+
+// OTROS COMANDOS GIT SON:
+// - //
+- git tag -a <verison> - m "esta es la versión x" -> Muestra una lista de todos los tag
+- git rebase -> Une el branch actual con el mastar, esto no se puede ver como un merge
+- git rebase --continue -> cuando resolvemos los conflictos --continue continua la secuencia del rebase donde se pausó
+- git rebase --skip - > Omite el conflicto y sigue su camino
+- git reabse --abort -> Devuelve todo al principio del rebase
+- git rebase <nameBranch> -> Para hacer un rebase a un branch en específico
+- git checkout -- <file> -> Quita del HEAD un archivo y le pone el estado de no trabajado
+- git remote add upstream <url> -> Descargar remote de un fork
+- git merge upstream/master -> Merge con master de un fork
+- git rm <archivo> -> Borrar un archivo del repositorio
+- git fetch -> Verifica cambios en el repositorio online con el local
+- git log --oneline --stat -> Muestras los cambios en los commits
+- git log --oneline --graph -> Muestra graficos de los commits
+- git diff --staged -> Muestra los cambios realizados a un archivo
