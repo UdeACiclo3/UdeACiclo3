@@ -7,6 +7,10 @@ Estoy probrando Git y Git hub ,.
 
 Mi hermano
 
+<<<<<<< HEAD
 Hola
 
 bebe
+=======
+Hola hermosa
+>>>>>>> 92d73e5440e45dec18b74d3fa721f55350d6e392
