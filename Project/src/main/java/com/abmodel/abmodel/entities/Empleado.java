@@ -4,10 +4,11 @@ public class Empleado {
 
     //Atributos
     private long id;
-    private String nombre, email, empresa, rol;
+    private String nombre, email, empresa;
+    private Enum_RoleName rol;
 
     //Constructor
-    public Empleado(long id, String nombre, String email, String empresa, String rol) {
+    public Empleado(long id, String nombre, String email, String empresa, Enum_RoleName rol) {
         this.id = id;
         this.nombre = nombre;
         this.email = email;
@@ -48,11 +49,11 @@ public class Empleado {
         this.empresa = empresa;
     }
 
-    public String getRol() {
+    public Enum_RoleName getRol() {
         return rol;
     }
 
-    public void setRol(String rol) {
+    public void setRol(Enum_RoleName rol) {
         this.rol = rol;
     }
 }
