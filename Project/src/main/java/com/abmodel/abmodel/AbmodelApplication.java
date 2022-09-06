@@ -6,20 +6,12 @@ import com.abmodel.abmodel.entities.Enum_RoleName;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-//@SpringBootApplication
+@SpringBootApplication
 public class AbmodelApplication {
 
 	public static void main(String[] args) {
-		//SpringApplication.run(AbmodelApplication.class, args);
-		System.out.println("~~~~~~~ Prueba de la entidad empresa ~~~~~~~");
-		Empresa empresa1 = new Empresa("SIGMI", "CRA 27 14 - 61", "486595", "25252652");
-		System.out.println("El nombre de la empresa es "+empresa1.getNombreempresa());
-
-		empresa1.setNombreempresa("UTEMPO");
-
-		System.out.println("El nuevo nombre es :"+empresa1.getNombreempresa());
-
-		System.out.println("~~~~~~~ Prueba de la entidad Empleado ~~~~~~~");
+		SpringApplication.run(AbmodelApplication.class, args);
+		/* System.out.println("~~~~~~~ Prueba de la entidad Empleado ~~~~~~~");
 		Empleado empleado = new Empleado(1, "Juan Lozano", "juan@gmail.com", empresa1, Enum_RoleName.ADMIN);
 
 		System.out.println("Nombre: " + empleado.getNombre());
@@ -40,7 +32,7 @@ public class AbmodelApplication {
 
 		System.out.println("Rol: " + empleado.getRol().name());
 		empleado.setRol(Enum_RoleName.OPERARIO);
-		System.out.println("Rol actualizado: " + empleado.getRol().name());
+		System.out.println("Rol actualizado: " + empleado.getRol().name());*/
 	}
 
 }

@@ -9,6 +9,7 @@ package com.abmodel.abmodel.entities;
  * @author nancy
  */
 public class Empresa {
+    private long id;
     private String nombreempresa;
     private String direccion;
     private String telefono;
@@ -52,5 +53,8 @@ public class Empresa {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-    
+
+    public long getId() {
+        return id;
+    }
 }
