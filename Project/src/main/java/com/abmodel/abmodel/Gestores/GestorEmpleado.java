@@ -13,8 +13,7 @@ public class GestorEmpleado {
         this.empleados = new ArrayList<>();
 
         //Informacion de prueba
-        this.empleados.add(new Empleado(1, "José Rodriguez", "jose_rodruiguez@gmail.com",
-                "Huevos s.a.", Enum_RoleName.ADMIN.name()));
+        //this.empleados.add(new Empleado(1, "José Rodriguez", "jose_rodruiguez@gmail.com", "Huevos s.a.", Enum_RoleName.ADMIN.name()));
     }
 
     public ArrayList<Empleado> getEmpleados() {
