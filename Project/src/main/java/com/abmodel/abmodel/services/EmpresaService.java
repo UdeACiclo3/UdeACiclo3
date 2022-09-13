@@ -1,70 +1,115 @@
 package com.abmodel.abmodel.services;
 
 import com.abmodel.abmodel.entities.Empresa;
-import org.springframework.scheduling.config.Task;
+import com.abmodel.abmodel.repositories.IEmpresaRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+@Service
 public class EmpresaService {
-    //Atributos
-    private List<Empresa> empresas;
+    private IEmpresaRepository empresaRepository;
 
     //Método constructor
-    public EmpresaService() {
-        empresas = new ArrayList<>();
+    public EmpresaService(IEmpresaRepository repository) {
+        this.empresaRepository = repository;
     }
 
     //Servicios
     public Response crearEmpresa(Empresa empresa){
         Response response = new Response();
-        empresas.add(empresa);
-        response.setCode(200);
-        response.setMessage("Empresa registrada exitosamente");
+        try {
+            if(empresaRepository.buscarEmpresaPorNombre(empresa.getNombre()).size()>0){
+                throw new Exception("El nombre de la empresa ya esta registrado en la base de datos");
+            }
+            if(empresaRepository.buscarEmpresaPorNit(empresa.getNit()).size()>0){
+                throw new Exception("El nit de la empresa ya esta registrado en la base de datos");
+            }
+            this.empresaRepository.save(empresa);
+            response.setCode(200);
+            response.setMessage("Empresa registrada exitosamente");
+        }catch(Exception e){
+            response.setCode(500);
+            response.setMessage("Error: " + e.getMessage());
+        }
         return response;
     }
 
+
     public Empresa getEmpresa(long id){
-        Empresa empresaEncontrada = null;
-        for (Empresa empresa: empresas) {
-            if(empresa.getId()== id){
-                empresaEncontrada = empresa;
-            }
+        Optional<Empresa> empresaEncontrada = this.empresaRepository.findById(id);
+        if(empresaEncontrada.isPresent()){
+            return empresaEncontrada.get();
+        }else{
+            return null;
         }
-        return empresaEncontrada;
     }
 
     public List<Empresa> getEmpresas() {
-        return empresas;
+        return this.empresaRepository.findAll();
     }
 
-    public Response editarEmpresa(Empresa empresaActualizada){
+    public Response editarEmpresa(long id, Empresa empresaActualizada){
         Response response = new Response();
-        Empresa empresaEncontrada = getEmpresa(empresaActualizada.getId());
-        if(empresaEncontrada==null){
+
+        //Validación del id
+        if(id == 0){
             response.setCode(500);
-            response.setMessage("Error: la empresa no esta registrada");
+            response.setMessage("Error: el id no es válido");
             return response;
         }
-        empresaEncontrada.setNombreempresa(empresaActualizada.getNombreempresa());
-        empresaEncontrada.setDireccion(empresaActualizada.getDireccion());
-        empresaEncontrada.setTelefono(empresaActualizada.getTelefono());
-        empresaEncontrada.setNit(empresaActualizada.getNit());
-        response.setCode(200);
-        response.setMessage("Empresa actualizada");
+        Empresa empresaEncontrada = getEmpresa(id);
+        if (empresaEncontrada == null){
+            response.setCode(500);
+            response.setMessage("Error: la empresa no esta registrada en la base de datos");
+            return response;
+        }
+
+        boolean esNecesarioActualizar = false;
+
+        //Validación de cada campo que trae la empresaActualizada
+        if (empresaActualizada.getNombre() !=null){
+            empresaEncontrada.setNombre(empresaActualizada.getNombre());
+            esNecesarioActualizar = true;
+        }
+        if (empresaActualizada.getDireccion()!=null){
+            empresaEncontrada.setDireccion(empresaActualizada.getDireccion());
+            esNecesarioActualizar = true;
+        }
+        if(empresaActualizada.getTelefono()!=null){
+            empresaEncontrada.setTelefono(empresaActualizada.getTelefono());
+            esNecesarioActualizar = true;
+        }
+        if(empresaActualizada.getNit()!=null){
+            empresaEncontrada.setNit(empresaActualizada.getNit());
+            esNecesarioActualizar = true;
+        }
+
+        if (esNecesarioActualizar){
+            empresaRepository.save(empresaEncontrada);
+            response.setCode(200);
+            response.setMessage("Empresa actualizada");
+        }else{
+            response.setCode(500);
+            response.setMessage("Error: la petición no contiene campos para actualizar");
+        }
         return response;
+
     }
 
     public Response eliminarEmpresa(long id){
         Response response = new Response();
-
-        Empresa empresaAEliminar = getEmpresa(id);
-        if (empresaAEliminar==null){
+        try{
+            this.empresaRepository.deleteById(id);
+            response.setCode(200);
+            response.setMessage("Empresa eliminada exitosamente");
+            return response;
+        }catch (Exception e){
             response.setCode(500);
-            response.setMessage("Error: la empresa no esta registrada");
+            response.setMessage("Error: " + e.getMessage());
             return response;
         }
-        empresas.remove(empresaAEliminar);
-        return response;
     }
 }

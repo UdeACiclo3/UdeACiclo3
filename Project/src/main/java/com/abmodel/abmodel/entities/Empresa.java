@@ -4,19 +4,27 @@
  */
 package com.abmodel.abmodel.entities;
 
-/**
- *
- * @author nancy
- */
-public class Empresa {
-    private long id;
-    private String nombreempresa;
-    private String direccion;
-    private String telefono;
-    private String nit;
+import javax.persistence.*;
 
-    public Empresa(String nombreempresa, String direccion, String telefono, String nit) {
-        this.nombreempresa = nombreempresa;
+@Entity
+@Table(name = "empresa")
+public class Empresa {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+    @Column(name = "nombre", unique = true)
+    private String nombre;
+    @Column(name = "nit", unique = true)
+    private String nit;
+    @Column(name = "direccion")
+    private String direccion;
+    @Column(name = "telefono")
+    private String telefono;
+
+    public Empresa() {
+    }
+    public Empresa(String nombre, String direccion, String telefono, String nit) {
+        this.nombre = nombre;
         this.direccion = direccion;
         this.telefono = telefono;
         this.nit = nit;
@@ -30,12 +38,12 @@ public class Empresa {
         this.nit = nit;
     }
 
-    public String getNombreempresa() {
-        return nombreempresa;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombreempresa(String nombreempresa) {
-        this.nombreempresa = nombreempresa;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getDireccion() {
