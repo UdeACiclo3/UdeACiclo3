@@ -5,6 +5,7 @@
 package com.abmodel.abmodel.entities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "empresa")
@@ -20,6 +21,9 @@ public class Empresa {
     private String direccion;
     @Column(name = "telefono")
     private String telefono;
+
+    private ArrayList<Empleado> empleados;
+    private ArrayList<MovimientoDinero> transacciones;
 
     public Empresa() {
     }
