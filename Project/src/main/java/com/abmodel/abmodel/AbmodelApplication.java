@@ -1,9 +1,5 @@
 package com.abmodel.abmodel;
 
-import com.abmodel.abmodel.entities.Empresa;
-import com.abmodel.abmodel.entities.Empleado;
-import com.abmodel.abmodel.entities.Enum_RoleName;
-import com.abmodel.abmodel.entities.MovimientoDinero;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

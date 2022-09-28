@@ -1,20 +1,24 @@
 package com.abmodel.abmodel.services;
 
 import com.abmodel.abmodel.entities.Empresa;
+import com.abmodel.abmodel.entities.Transaccion;
 import com.abmodel.abmodel.repositories.IEmpresaRepository;
+import com.abmodel.abmodel.repositories.ITransaccionRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class EmpresaService {
     private IEmpresaRepository empresaRepository;
+    private ITransaccionRepository transaccionRepository;
 
     //Método constructor
-    public EmpresaService(IEmpresaRepository repository) {
+    public EmpresaService(IEmpresaRepository repository, ITransaccionRepository transaccionRepository) {
         this.empresaRepository = repository;
+        this.transaccionRepository = transaccionRepository;
     }
 
     //Servicios
@@ -27,6 +31,8 @@ public class EmpresaService {
             if(empresaRepository.buscarEmpresaPorNit(empresa.getNit()).size()>0){
                 throw new Exception("El nit de la empresa ya esta registrado en la base de datos");
             }
+            empresa.setFechaCreacion(LocalDateTime.now());
+            empresa.setFechaActualizacion(LocalDateTime.now());
             this.empresaRepository.save(empresa);
             response.setCode(200);
             response.setMessage("Empresa registrada exitosamente");
@@ -88,6 +94,7 @@ public class EmpresaService {
         }
 
         if (esNecesarioActualizar){
+            empresaEncontrada.setFechaActualizacion(LocalDateTime.now());
             empresaRepository.save(empresaEncontrada);
             response.setCode(200);
             response.setMessage("Empresa actualizada");
@@ -105,6 +112,79 @@ public class EmpresaService {
             this.empresaRepository.deleteById(id);
             response.setCode(200);
             response.setMessage("Empresa eliminada exitosamente");
+            return response;
+        }catch (Exception e){
+            response.setCode(500);
+            response.setMessage("Error: " + e.getMessage());
+            return response;
+        }
+    }
+
+    //Transacciones
+    public Response agregarTransaccion(Long idEmpresa, Transaccion transaccion){
+        Response response = new Response();
+        try{
+            Empresa empresa = empresaRepository.findById(idEmpresa).get();
+            transaccion.setFechaCreacion(LocalDateTime.now());
+            transaccion.setEmpresa(empresa);
+            transaccionRepository.save(transaccion);
+            response.setCode(200);
+            response.setMessage("Transaccion registrada");
+
+        }catch (Exception e){
+            response.setCode(500);
+            response.setMessage("Error: " + e.getMessage());
+        }
+        return response;
+    }
+
+    public List<Transaccion> getTransacciones(){
+        return transaccionRepository.findAll();
+    }
+
+    public List<Transaccion> getTransaccionesPorEmpresa(long idEmpresa){
+        Empresa empresa = empresaRepository.findById(idEmpresa).get();
+        return transaccionRepository.buscarPorEmpresa(empresa);
+    }
+
+    public Response actualizarTransaccion(long id, Transaccion transaccionActualizada){
+        Response response = new Response();
+        Transaccion transaccionEncontrada = transaccionRepository.findById(id).get();
+
+        boolean esNecesarioActualizar = false;
+
+        //Validación de cada campo que trae la transaccion acualizada
+        if (transaccionEncontrada.getConcepto() !=null){
+            transaccionEncontrada.setConcepto(transaccionActualizada.getConcepto());
+            esNecesarioActualizar = true;
+        }
+        if (transaccionEncontrada.getMonto()!=transaccionActualizada.getMonto() && transaccionActualizada.getMonto() !=0){
+            transaccionEncontrada.setMonto(transaccionActualizada.getMonto());
+            esNecesarioActualizar = true;
+        }
+        if(transaccionEncontrada.getEmpleado() !=null){
+            transaccionEncontrada.setEmpleado(transaccionActualizada.getEmpleado());
+            esNecesarioActualizar = true;
+        }
+
+        if (esNecesarioActualizar){
+            transaccionEncontrada.setFechaActualizacion(LocalDateTime.now());
+            transaccionRepository.save(transaccionEncontrada);
+            response.setCode(200);
+            response.setMessage("Transacción actualizada");
+        }else{
+            response.setCode(500);
+            response.setMessage("Error: la petición no contiene campos para actualizar");
+        }
+        return response;
+    }
+
+    public Response eliminarTransaccion(long id){
+        Response response = new Response();
+        try{
+            transaccionRepository.deleteById(id);
+            response.setCode(200);
+            response.setMessage("Transaccion eliminada exitosamente");
             return response;
         }catch (Exception e){
             response.setCode(500);

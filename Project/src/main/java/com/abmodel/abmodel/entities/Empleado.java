@@ -1,60 +1,50 @@
 package com.abmodel.abmodel.entities;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "empleado")
 public class Empleado {
 
     //Atributos
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String nombre, email;
+    @Column(name = "fechacreacion")
+    private LocalDateTime fechaCreacion;
+    private LocalDateTime fechaActualizacion;
+    private String nombre;
+    private String email;
+    @ManyToOne
+    @JoinColumn(name = "empleado_empresa")
     private Empresa empresa;
     private Enum_RoleName rol;
+    @OneToMany(mappedBy = "empleado")
+    private List<Transaccion> transacciones;
 
-    //Constructor
-    public Empleado(long id, String nombre, String email, Empresa empresa, Enum_RoleName rol) {
-        this.id = id;
-        this.nombre = nombre;
-        this.email = email;
-        this.empresa = empresa;
-        this.rol = rol;
-    }
-
-    //Getters and setters
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Empresa getEmpresa() {
-        return empresa;
-    }
-
-    public void setEmpresa(Empresa empresa) {
-        this.empresa = empresa;
-    }
-
-    public Enum_RoleName getRol() {
-        return rol;
-    }
-
-    public void setRol(Enum_RoleName rol) {
-        this.rol = rol;
+    @Override
+    public String toString() {
+        return "Empleado{" +
+                "id=" + id +
+                ", fechaCreacion=" + fechaCreacion +
+                ", fechaActualizacion=" + fechaActualizacion +
+                ", nombre='" + nombre + '\'' +
+                ", email='" + email + '\'' +
+                ", empresa=" + empresa +
+                ", rol=" + rol +
+                ", transacciones=" + transacciones +
+                '}';
     }
 }
