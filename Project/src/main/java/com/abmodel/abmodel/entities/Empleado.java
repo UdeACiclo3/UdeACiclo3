@@ -31,8 +31,6 @@ public class Empleado {
     @JoinColumn(name = "empleado_empresa")
     private Empresa empresa;
     private Enum_RoleName rol;
-    @OneToMany(mappedBy = "empleado")
-    private List<Transaccion> transacciones;
 
     @Override
     public String toString() {
@@ -44,7 +42,6 @@ public class Empleado {
                 ", email='" + email + '\'' +
                 ", empresa=" + empresa +
                 ", rol=" + rol +
-                ", transacciones=" + transacciones +
                 '}';
     }
 }
