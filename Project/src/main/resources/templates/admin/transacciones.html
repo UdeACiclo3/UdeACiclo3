@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{master}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Transacciones</title>
+
+</head>
+
+<body>
+
+    <div layout:fragment="content">
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-2 text-gray-800">Movimientos de dinero</h1>
+            <a class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+               href="#" data-toggle="modal" data-target="#addTransactionModal">
+                <i class="fas fa-download fa-sm text-white-50"></i>
+                Agregar transacción
+            </a>
+        </div>
+        <p class="mb-4">En este apartado encuentra los movimientos de dinero.</p>
+
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Transacciones</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>Concepto</th>
+                            <th>Monto</th>
+                            <th>Fecha de creación</th>
+                            <th>Fecha de actualización</th>
+                            <th>Empresa</th>
+                            <th>Empleado</th>
+                            <th>Acciones</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="trsn : ${transacciones}">
+                            <td th:text="${trsn.concepto}"></td>
+                            <td th:text="${trsn.monto}"></td>
+                            <td th:text="${trsn.fechaCreacion}"></td>
+                            <td th:text="${trsn.fechaActualizacion}"></td>
+                            <td th:text="${trsn.empresa.nombre}"></td>
+                            <td th:text="${trsn.empleado.nombre}"></td>
+                            <td>
+                                <a class="btn btn-primary">Editar</a>
+                                <a class="btn btn-success">Eliminar</a>
+                                <!-- <a  class="btn btn-primary" th:href="@{/admin/edituser/{postId}(postId=${usr.Id})}">
+                                    Editar
+                                </a>
+                                <a th:href="@{/admin/deleteuser/{postId}(postId=${usr.Id})}" class="btn btn-success">
+                                    Eliminar
+                                </a> -->
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Transaction Modal -->
+    <div class="modal fade" id="addTransactionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Ingrese los datos de la transacción</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+
+                    <form class="user">
+                        <div class="form-group row">
+                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                <input type="text" class="form-control form-control-user" id="exampleFirstName"
+                                       placeholder="Concepto">
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control form-control-user"
+                                       placeholder="Monto">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control form-control-user"
+                                   placeholder="Empleado">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control form-control-user"
+                                   placeholder="Empresa">
+                        </div>
+                    </form>
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-primary" type="submit">Agregar transacción</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
