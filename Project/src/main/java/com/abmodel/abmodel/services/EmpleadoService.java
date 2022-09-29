@@ -1,10 +1,12 @@
 package com.abmodel.abmodel.services;
 
+import com.abmodel.abmodel.dto.CredentialsDto;
 import com.abmodel.abmodel.entities.Empleado;
 import com.abmodel.abmodel.repositories.IEmpleadoRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 @Service
@@ -99,5 +101,23 @@ public class EmpleadoService {
             response.setMessage("Error: " + e.getMessage());
             return response;
         }
+    }
+
+
+
+
+    public Response loginUser(CredentialsDto credentials){
+        Response response = new Response();
+
+        List<Empleado> existe = this.empleadoRepository.validaCredenciales(credentials.getUser(),credentials.getPassword());
+        if(existe != null && existe.size() > 0){
+            response.setCode(200);
+            response.setMessage("Usuario autenticado exitosamente.");
+            return  response;
+        }
+
+        response.setCode(500);
+        response.setMessage("Error, sus datos de acceso no son válidos");
+        return  response;
     }
 }

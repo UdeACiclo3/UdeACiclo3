@@ -31,6 +31,7 @@ public class Empleado {
     @JoinColumn(name = "empleado_empresa")
     private Empresa empresa;
     private Enum_RoleName rol;
+    private String password;
 
     @Override
     public String toString() {
